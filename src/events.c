@@ -474,6 +474,12 @@ void handle_state(monitor_t *m, desktop_t *d, node_t *n, xcb_atom_t state, unsig
 				set_state(m, d, n, next_state);
 			}
 		}
+
+		// HACK: some programs don't automatically resize when fullscreen
+		// events are ignored
+		window_resize(n->id, n->rectangle.width + 1, n->rectangle.height + 1);
+		window_resize(n->id, n->rectangle.width, n->rectangle.height);
+
 		arrange(m, d);
 	} else if (state == ewmh->_NET_WM_STATE_BELOW) {
 		if (action == XCB_EWMH_WM_STATE_ADD) {
