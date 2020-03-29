@@ -107,7 +107,7 @@ void apply_layout(monitor_t *m, desktop_t *d, node_t *n, xcb_rectangle_t rect, x
 			r.width = (bleed < r.width ? r.width - bleed : 1);
 			r.height = (bleed < r.height ? r.height - bleed : 1);
 			/* pseudo-tiled clients */
-			if (s == STATE_PSEUDO_TILED) {
+			if (s == STATE_PSEUDO_TILED && d->layout != LAYOUT_MONOCLE) {
 				xcb_rectangle_t f = n->client->floating_rectangle;
 				r.width = MIN(r.width, f.width);
 				r.height = MIN(r.height, f.height);
