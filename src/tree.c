@@ -100,7 +100,9 @@ void apply_layout(monitor_t *m, desktop_t *d, node_t *n, xcb_rectangle_t rect, x
 		xcb_rectangle_t cr = get_window_rectangle(n);
 		client_state_t s = n->client->state;
 		/* tiled and pseudo-tiled clients */
-		if (s == STATE_TILED || s == STATE_PSEUDO_TILED) {
+		if (s == STATE_TILED || s == STATE_PSEUDO_TILED
+				/* treat floating nodes as tiled in monocle mode */
+				|| (s == STATE_FLOATING && d->layout == LAYOUT_MONOCLE)) {
 			int wg = (gapless_monocle && d->layout == LAYOUT_MONOCLE ? 0 : d->window_gap);
 			r = rect;
 			int bleed = wg + 2 * bw;
